@@ -5,7 +5,6 @@ import { appendFileSync } from "fs";
 import { Secp256k1HdWallet } from "@cosmjs/launchpad";
 import { assert } from "console";
 import { SigningStargateClient } from "@cosmjs/stargate";
-import { base64 } from "ethers/lib/utils";
 
 export class CosmosInscriber extends Inscriber {
 
@@ -32,7 +31,7 @@ export class CosmosInscriber extends Inscriber {
   }
 
   buildCallData(inp: Inscription): string {
-    return base64.encode(this.stringify(inp));
+    return Buffer.from(this.stringify(inp)).toString('base64');
   }
 
   createSigner(): Defferable<this> {

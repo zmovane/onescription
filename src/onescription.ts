@@ -2,7 +2,6 @@ import { Inscriber, Inscription } from "./inscriber";
 import { Semaphore } from 'async-mutex';
 import { delay } from "./utils";
 
-
 export type Strategy = {
   maxConcurrentRequests?: number;
   statusToWait?: "requested" | "submitted" | "confirmed";
