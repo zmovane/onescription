@@ -97,6 +97,3 @@ export declare abstract class Inscriber implements InscriberAbility, Signable {
     randomRpc(): string;
     loadMnemonic(address?: string): string;
 }
-import "./evm";
-import "./cosmos";
-import "./injective";

@@ -1,5 +1,5 @@
 import { Defferable, EvmConfig, Inscriber, Inscription, Provider, Signer, Tx } from ".";
-export declare class EvmInscriber extends Inscriber {
+export default class EvmInscriber extends Inscriber {
     constructor(config: EvmConfig);
     inscribe(inp: Inscription): Promise<Tx>;
     randomProvider(): Provider;
