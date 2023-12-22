@@ -1,5 +1,5 @@
-import { CosmosConfig, Defferable, Inscriber, Inscription, Signer, Tx } from ".";
-export default class CosmosInscriber extends Inscriber {
+import { CosmosConfig, Defferable, Inscriber, Inscription, Signer, Tx } from "./inscriber";
+export declare class CosmosInscriber extends Inscriber {
     constructor(config: CosmosConfig);
     inscribe(inp: Inscription): Promise<Tx>;
     stringify(inp: Inscription): string;

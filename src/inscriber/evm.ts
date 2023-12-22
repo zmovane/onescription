@@ -1,10 +1,10 @@
 import { BigNumber, ethers } from "ethers";
 import { CHAINS_EVM } from "../config";
-import { Defferable, EvmConfig, Inscriber, Inscription, Provider, Signer, Tx } from ".";
+import { Defferable, EvmConfig, Inscriber, Inscription, Provider, Signer, Tx } from "./inscriber";
 import { appendFileSync } from "fs";
 import assert from "assert";
 
-export default class EvmInscriber extends Inscriber {
+export class EvmInscriber extends Inscriber {
   constructor(config: EvmConfig) {
     super(config);
     this.rpcs = CHAINS_EVM[`${config.chainId}`]?.rpcs ?? [];

@@ -1,13 +1,13 @@
 import { BigNumber, ethers } from "ethers";
 import { CHAINS_COSMOS } from "../config";
-import { CosmosConfig, Defferable, Inscriber, Inscription, Signer, Tx, TxRequest } from ".";
+import { CosmosConfig, Defferable, Inscriber, Inscription, Signer, Tx, TxRequest } from "./inscriber";
 import { appendFileSync } from "fs";
 import { Secp256k1HdWallet } from "@cosmjs/launchpad";
 import { assert } from "console";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { base64 } from "ethers/lib/utils";
 
-export default class CosmosInscriber extends Inscriber {
+export class CosmosInscriber extends Inscriber {
   constructor(config: CosmosConfig) {
     super(config);
     this.rpcs = CHAINS_COSMOS[config.prefix]?.rpcs ?? [];

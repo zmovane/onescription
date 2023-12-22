@@ -1,7 +1,7 @@
-import EvmInscriber from "./inscriber/evm";
-import { Onescription, Strategy } from "./onescription";
+import { EvmInscriber } from ".";
+import { Onescription, Strategy } from ".";
 
-async function main() {
+async function demo() {
   const inscriber = new EvmInscriber({
     chainId: 56,
     isSelfTransaction: true,
@@ -14,4 +14,4 @@ async function main() {
     await onescription.inscribe(inscription);
   }
 }
-main()
+demo()

@@ -1,9 +1,9 @@
-import { CosmosConfig, Signer, TxRequest } from ".";
+import { CosmosConfig, Signer, TxRequest } from "./inscriber";
 import { ChainRestAuthApi, MsgSend, PrivateKey, TxGrpcClient, createTransaction } from "@injectivelabs/sdk-ts";
 import { Network, getNetworkInfo } from "@injectivelabs/networks";
-import CosmosInscriber from "./cosmos";
+import { CosmosInscriber } from "./cosmos";
 
-export default class InjectiveInscriber extends CosmosInscriber {
+export class InjectiveInscriber extends CosmosInscriber {
   constructor(config: CosmosConfig) {
     super(config);
   }
