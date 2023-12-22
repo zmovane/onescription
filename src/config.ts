@@ -1,13 +1,6 @@
-import fs from "fs";
-import yaml from 'js-yaml';
+import { readYaml } from "./utils";
 
-const PATH_EVM_CHAINS = "evmchains.config.yaml";
-const PATH_COSMOS_CHAINS = 'cosmoschains.config.yaml';
+type ChainsConfig = Record<string, { name: string, rpcs: string[] }>;
 
-type ConfigEvmChains = Record<number, { name: string, rpcs: string[] }>;
-type ConfigCosmosChains = Record<string, { name: string, rpcs: string[] }>;
-
-export const EVM_CHAINS =
-    yaml.load(fs.readFileSync(PATH_EVM_CHAINS, 'utf8')) as ConfigEvmChains;
-export const COSMOS_CHAINS =
-    yaml.load(fs.readFileSync(PATH_COSMOS_CHAINS, 'utf8')) as ConfigCosmosChains;
+export const CHAINS_EVM = readYaml<ChainsConfig>("evmchains.config.yaml");
+export const CHAINS_COSMOS = readYaml<ChainsConfig>("cosmoschains.config.yaml");

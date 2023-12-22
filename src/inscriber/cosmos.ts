@@ -1,5 +1,5 @@
 import { BigNumber, ethers } from "ethers";
-import { COSMOS_CHAINS } from "../config";
+import { CHAINS_COSMOS } from "../config";
 import { CosmosConfig, Defferable, Inscriber, Inscription, Signer, Tx, TxRequest } from ".";
 import { appendFileSync } from "fs";
 import { Secp256k1HdWallet } from "@cosmjs/launchpad";
@@ -10,7 +10,7 @@ import { base64 } from "ethers/lib/utils";
 export class CosmosInscriber extends Inscriber {
     constructor(config: CosmosConfig) {
         super(config);
-        this.rpcs = COSMOS_CHAINS[config.prefix]?.rpcs ?? [];
+        this.rpcs = CHAINS_COSMOS[config.prefix]?.rpcs ?? [];
     }
 
     async inscribe(inp: Inscription): Promise<Tx> {

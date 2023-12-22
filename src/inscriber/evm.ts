@@ -1,5 +1,5 @@
 import { BigNumber, ethers } from "ethers";
-import { EVM_CHAINS } from "../config";
+import { CHAINS_EVM } from "../config";
 import { Defferable, EvmConfig, Inscriber, Inscription, Provider, Signer, Tx } from ".";
 import { appendFileSync } from "fs";
 import assert from "assert";
@@ -7,7 +7,7 @@ import assert from "assert";
 export class EvmInscriber extends Inscriber {
     constructor(config: EvmConfig) {
         super(config);
-        this.rpcs = EVM_CHAINS[config.chainId]?.rpcs ?? [];
+        this.rpcs = CHAINS_EVM[`${config.chainId}`]?.rpcs ?? [];
     }
 
     async inscribe(inp: Inscription): Promise<Tx> {
