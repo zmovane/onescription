@@ -133,3 +133,7 @@ export abstract class Inscriber implements InscriberAbility, Signable {
         return mnemonic;
     }
 }
+
+import  "./evm";
+import "./cosmos";
+import "./injective";
