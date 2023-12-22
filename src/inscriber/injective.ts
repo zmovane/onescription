@@ -1,5 +1,5 @@
 import { CosmosConfig, TxRequest } from "./inscriber";
-import { ChainRestAuthApi, MsgSend, PrivateKey, TxGrpcClient, createTransaction } from "@injectivelabs/sdk-ts";
+import { BaseAccount, ChainRestAuthApi, MsgSend, PrivateKey, TxGrpcClient, createTransaction } from "@injectivelabs/sdk-ts";
 import { Network, getNetworkInfo } from "@injectivelabs/networks";
 import { CosmosInscriber } from "./cosmos";
 
@@ -21,9 +21,11 @@ export class InjectiveInscriber extends CosmosInscriber {
           denom: "inj",
         };
         const publicKey = signer.toPublicKey().toBase64();
-        const accountDetails = await new ChainRestAuthApi(
+        const accountDetailsResponse = await new ChainRestAuthApi(
           network.rest
         ).fetchAccount(injectiveAddress);
+        const baseAccount = BaseAccount.fromRestApi(accountDetailsResponse);
+        const accountDetails = baseAccount.toAccountDetails();
         const msg = MsgSend.fromJSON({
           amount,
           srcInjectiveAddress: sender,
@@ -43,11 +45,8 @@ export class InjectiveInscriber extends CosmosInscriber {
             gas: "900000",
           },
           pubKey: publicKey,
-          sequence: parseInt(accountDetails.account.base_account.sequence, 10),
-          accountNumber: parseInt(
-            accountDetails.account.base_account.account_number,
-            10
-          ),
+          sequence: accountDetails.sequence,
+          accountNumber: accountDetails.accountNumber,
           chainId: network.chainId,
         });
 
