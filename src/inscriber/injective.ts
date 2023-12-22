@@ -29,6 +29,7 @@ export class InjectiveInscriber extends CosmosInscriber {
                     srcInjectiveAddress: sender,
                     dstInjectiveAddress: recipient,
                 });
+                // FIXME: configurable gas 
                 const { signBytes, txRaw } = createTransaction({
                     message: msg,
                     memo: memo.toString(),

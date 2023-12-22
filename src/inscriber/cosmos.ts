@@ -49,6 +49,7 @@ export class CosmosInscriber extends Inscriber {
         throw Error("Unknown prefix");
     }
 
+    // TODO: configurable gas 
     async loadSigner(address?: string): Promise<Signer> {
         const mnemonic = this.loadMnemonic(address);
         const prefix = (this.config as CosmosConfig).prefix;

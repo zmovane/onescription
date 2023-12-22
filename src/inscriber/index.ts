@@ -24,6 +24,9 @@ export type MintInscription = Omit<Inscription, "max" | "lim">;
  *  
  * @contract @functionAbi
  * must be set if minting transaction isn't a self-transaction
+ * 
+ * @gasPrice @gasLimit
+ * If not set, estimated gas will be used.
  */
 export type Config = {
     startBlock?: number;
@@ -33,6 +36,8 @@ export type Config = {
     functionAbi?: string;
     secretPath?: string;
     value?: BigNumberish;
+    gasPrice?: BigNumberish;
+    gasLimit?: BigNumberish;
 }
 
 // Currently support evm & cosmos
@@ -51,6 +56,7 @@ export interface Provider {
     getBlockNumber(): Promise<number>;
     getGasPrice(): Promise<BigNumberish>;
     getBalance(address: string): Promise<BigNumberish>;
+    estimateGas(transaction: TxRequest): Promise<BigNumberish>
 }
 export interface TxRequest {
     to: string,
