@@ -1,4 +1,4 @@
-import { Inscriber, Inscription, Tx } from "./inscriber";
+import { Inscriber, Inscription } from "./inscriber";
 import { Semaphore } from 'async-mutex';
 import { delay } from "./utils";
 
@@ -39,11 +39,11 @@ export class Onescription {
       this.inscriber
         .inscribe(inp)
         .then((_) => console.log)
-        .catch((e) => {
-          console.error("Inscribe failed: ", e);
+        .catch(async (e) => {
           if (this.strategy.delayIfFailed) {
-            return delay(this.strategy.delayIfFailed)
+            await delay(this.strategy.delayIfFailed)
           }
+          return Promise.reject(e);
         })
         .finally(() => {
           this.semaphore.release();
