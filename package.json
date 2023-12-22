@@ -1,9 +1,12 @@
 {
-  "name": "parasyte-bridge",
-  "version": "1.0.0",
+  "name": "onescription",
+  "version": "0.0.1",
+  "types": "dist/index.d.ts",
+  "prepublish": "tsc",
   "main": "src/main.ts",
   "scripts": {
     "start": "bun run src/main.ts",
+    "build": "tsc",
     "generate-types": "typechain --target ethers-v5 --out-dir src/typechain 'src/abi/*.json'"
   },
   "license": "MIT",
@@ -26,10 +29,10 @@
     "iost": "^0.1.22",
     "js-yaml": "^4.1.0",
     "ts-node": "^10.9.1",
-    "typechain": "^8.3.2",
-    "typescript": "^5.3.2"
+    "typechain": "^8.3.2"
   },
   "devDependencies": {
-    "@types/node": "^20.10.4"
+    "@types/node": "^20.10.4",
+    "typescript": "^5.3.2"
   }
 }
