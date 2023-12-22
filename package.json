@@ -1,17 +1,9 @@
 {
   "name": "onescription",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": [
-    "lib/**/*.d.ts",
-    "lib/**/*.js",
-    "lib/**/*.js.map",
-    "lib/**/*.json",
-    "*.d.ts",
-    "*.js",
-    "*.json"
-  ],
+  "files": ["lib/*"],
   "scripts": {
     "build": "tsc",
     "generate-types": "typechain --target ethers-v5 --out-dir src/typechain 'src/abi/*.json'"
