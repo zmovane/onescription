@@ -85,9 +85,23 @@ export interface InscriberAbility {
 }
 
 export interface Signable {
-  loadSigner(address?: string): Defferable<Signer>;
-  createSigner(): Defferable<Signer>;
-  loadMnemonic(): string;
+  connectSignerFromMnemonic(mnemonic: string): Defferable<Signable>;
+  connectSignerFromPrivateKey(privateKey: string): Defferable<Signable>;
+
+  /**
+   * @param secretPath
+   * Generate a new signer and automatically save the address and corresponding 
+   * mnemonic to the specified path. 
+   * If the path is not specified, it will be saved to secret.csv by default.
+   */
+  createSigner(secretPath?: string): Defferable<Signable>;
+
+  /**
+   * @param address
+   * if the address isn't set, the first address will be used as the signer.
+   */
+  connectSignerFromSecretCsv(address?: string): Defferable<Signable>;
+  connectMnemonicFromSecretCsv(address?: string): string;
 }
 
 export abstract class Inscriber implements InscriberAbility, Signable {
@@ -100,14 +114,17 @@ export abstract class Inscriber implements InscriberAbility, Signable {
     this.config = config;
     this.secretPath = config.secretPath || "./secret.csv";
   }
+  abstract connectSignerFromMnemonic(mnemonic: string): Defferable<typeof this>;
+  abstract connectSignerFromPrivateKey(privateKey: string): Defferable<typeof this>
+  abstract connectSignerFromSecretCsv(address?: string): Defferable<typeof this>;
 
-  abstract loadSigner(address?: string): Defferable<Signer>;
-  abstract createSigner(): Defferable<Signer>;
   abstract inscribe(inscription: Inscription): Promise<Tx>;
+  abstract createSigner(secretPath?: string): Defferable<typeof this>;
+
   randomRpc(): string {
     return this.rpcs[randomInt(this.rpcs.length)];
   }
-  loadMnemonic(address?: string): string {
+  connectMnemonicFromSecretCsv(address?: string): string {
     let input: string;
     let records: { address: string, mnemonic: string }[] = [];
     if (!existsSync(this.secretPath)) {

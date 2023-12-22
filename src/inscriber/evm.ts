@@ -1,10 +1,11 @@
 import { BigNumber, ethers } from "ethers";
 import { CHAINS_EVM } from "../chains";
-import { Defferable, EvmConfig, Inscriber, Inscription, Provider, Signer, Tx } from "./inscriber";
+import { Defferable, EvmConfig, Inscriber, Inscription, Provider, Tx } from "./inscriber";
 import { appendFileSync } from "fs";
 import assert from "assert";
 
 export class EvmInscriber extends Inscriber {
+
   constructor(config: EvmConfig) {
     super(config);
     this.rpcs = CHAINS_EVM[`${config.chainId}`]?.rpcs ?? [];
@@ -34,16 +35,28 @@ export class EvmInscriber extends Inscriber {
     return ethers.utils.hexlify(this.stringify(inp))
   }
 
-  createSigner(): Defferable<Signer> {
+  createSigner(): Defferable<this> {
     const signer = ethers.Wallet.createRandom();
     const { address, privateKey } = signer;
     const record = `${address}${this.csvDelimiter}${privateKey}\r\n`;
     appendFileSync(this.secretPath, record);
-    return signer;
+    this.signer = signer;
+    return this;
   }
 
-  loadSigner(address?: string): Defferable<Signer> {
-    const mnemonic = this.loadMnemonic(address);
-    return ethers.Wallet.fromMnemonic(mnemonic);
+  connectSignerFromSecretCsv(address?: string): Defferable<this> {
+    const mnemonic = this.connectMnemonicFromSecretCsv(address);
+    this.signer = ethers.Wallet.fromMnemonic(mnemonic);
+    return this;
+  }
+
+  connectSignerFromMnemonic(mnemonic: string): Defferable<this> {
+    this.signer = ethers.Wallet.fromMnemonic(mnemonic);
+    return this;
+  }
+
+  connectSignerFromPrivateKey(privateKey: string): Defferable<this> {
+    this.signer = new ethers.Wallet(privateKey);
+    return this;
   }
 }

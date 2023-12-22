@@ -8,6 +8,7 @@ import { SigningStargateClient } from "@cosmjs/stargate";
 import { base64 } from "ethers/lib/utils";
 
 export class CosmosInscriber extends Inscriber {
+
   constructor(config: CosmosConfig) {
     super(config);
     this.rpcs = CHAINS_COSMOS[config.prefix]?.rpcs ?? [];
@@ -30,12 +31,13 @@ export class CosmosInscriber extends Inscriber {
     return base64.encode(this.stringify(inp));
   }
 
-  createSigner(): Defferable<Signer> {
+  createSigner(): Defferable<this> {
     const signer = ethers.Wallet.createRandom();
     const { address, privateKey } = signer;
     const record = `${address}${this.csvDelimiter}${privateKey}\r\n`;
     appendFileSync(this.secretPath, record);
-    return signer;
+    this.signer = signer;
+    return this;
   }
 
   nativeDenomOf(prefix: string) {
@@ -50,8 +52,11 @@ export class CosmosInscriber extends Inscriber {
   }
 
   // TODO: configurable gas 
-  async loadSigner(address?: string): Promise<Signer> {
-    const mnemonic = this.loadMnemonic(address);
+  async connectSignerFromSecretCsv(address?: string): Promise<this> {
+    const mnemonic = this.connectMnemonicFromSecretCsv(address);
+    return this.connectSignerFromMnemonic(mnemonic);
+  }
+  async connectSignerFromMnemonic(mnemonic: string): Promise<this> {
     const prefix = (this.config as CosmosConfig).prefix;
     const wallet = await Secp256k1HdWallet.fromMnemonic(mnemonic.trim(), { prefix });
     const client = await SigningStargateClient.connectWithSigner(this.randomRpc(), wallet);
@@ -68,6 +73,10 @@ export class CosmosInscriber extends Inscriber {
         );
         return { hash: transactionHash }
       };
-    return { sendTransaction, getAddress };
+    this.signer = { sendTransaction, getAddress };
+    return this;
+  }
+  connectSignerFromPrivateKey(privateKey: string): Defferable<this> {
+    throw new Error("Method not implemented.");
   }
 }

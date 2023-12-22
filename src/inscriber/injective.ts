@@ -1,4 +1,4 @@
-import { CosmosConfig, Signer, TxRequest } from "./inscriber";
+import { CosmosConfig, TxRequest } from "./inscriber";
 import { ChainRestAuthApi, MsgSend, PrivateKey, TxGrpcClient, createTransaction } from "@injectivelabs/sdk-ts";
 import { Network, getNetworkInfo } from "@injectivelabs/networks";
 import { CosmosInscriber } from "./cosmos";
@@ -8,8 +8,8 @@ export class InjectiveInscriber extends CosmosInscriber {
     super(config);
   }
 
-  async loadSigner(address?: string): Promise<Signer> {
-    const mnemonic = this.loadMnemonic(address);
+  async connectSignerFromSecretCsv(address?: string): Promise<this> {
+    const mnemonic = this.connectMnemonicFromSecretCsv(address);
     const signer = PrivateKey.fromMnemonic(mnemonic)
     const getAddress = async () => signer.toAddress().address;
     const sendTransaction =
@@ -57,6 +57,7 @@ export class InjectiveInscriber extends CosmosInscriber {
         const txResponse = await txService.broadcast(txRaw);
         return { hash: txResponse.txHash }
       };
-    return { sendTransaction, getAddress };
+    this.signer = { sendTransaction, getAddress };
+    return this;
   }
 }
