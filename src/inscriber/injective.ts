@@ -11,11 +11,10 @@ export class InjectiveInscriber extends CosmosInscriber {
   async connectSignerFromSecretCsv(address?: string): Promise<this> {
     const mnemonic = this.connectMnemonicFromSecretCsv(address);
     const signer = PrivateKey.fromMnemonic(mnemonic)
-    const getAddress = async () => signer.toAddress().address;
+    const getAddress = async () => signer.toBech32();
     const sendTransaction =
       async ({ from: sender, to: recipient, value, data: memo }: TxRequest) => {
         const network = getNetworkInfo(Network.Mainnet);
-        const injectiveAddress = signer.toBech32();
         const amount = {
           amount: value.toString(),
           denom: "inj",
@@ -23,7 +22,7 @@ export class InjectiveInscriber extends CosmosInscriber {
         const publicKey = signer.toPublicKey().toBase64();
         const accountDetailsResponse = await new ChainRestAuthApi(
           network.rest
-        ).fetchAccount(injectiveAddress);
+        ).fetchAccount(sender);
         const baseAccount = BaseAccount.fromRestApi(accountDetailsResponse);
         const accountDetails = baseAccount.toAccountDetails();
         const msg = MsgSend.fromJSON({
