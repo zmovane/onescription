@@ -53,7 +53,6 @@ export class InjectiveInscriber extends CosmosInscriber {
                 const signature = await signer.sign(Buffer.from(signBytes));
                 txRaw.signatures = [signature];
                 const txService = new TxGrpcClient(network.grpc);
-                const simulationResponse = await txService.simulate(txRaw);
                 const txResponse = await txService.broadcast(txRaw);
                 return { hash: txResponse.txHash }
             };

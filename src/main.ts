@@ -1,12 +1,17 @@
 import { EvmInscriber } from "./inscriber/evm";
+import { Onescription, Strategy } from "./onescription";
 
 async function main() {
-    let inscriber = new EvmInscriber({
+    const inscriber = new EvmInscriber({
         chainId: 56,
         isSelfTransaction: true,
     });
     await inscriber.loadSigner();
-    let tx = await inscriber.inscribe({ p: "injrc-20", op: "mint", tick: "INJS", amt: "1000" })
-    console.log(tx)
+    const strategy: Strategy = { maxConcurrentRequests: 5, statusToWait: "submitted" };
+    const onescription = new Onescription(inscriber, strategy);
+    for (; ;) {
+        const inscription = { 'p': 'brc20', 'op': 'mint', 'tick': 'wakaka', 'amt': '1000' };
+        await onescription.inscribe(inscription);
+    }
 }
 main()
