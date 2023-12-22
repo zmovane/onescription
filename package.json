@@ -1,7 +1,7 @@
 {
   "name": "onescription",
   "version": "0.0.1",
-  "types": "dist/index.d.ts",
+  "types": "dist/onescription.d.ts",
   "prepublish": "tsc",
   "main": "src/main.ts",
   "scripts": {
