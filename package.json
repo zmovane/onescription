@@ -1,10 +1,10 @@
 {
   "name": "onescription",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "prepublish": "tsc",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib/**/*.d.ts", "lib/**/*.js", "lib/**/*.js.map", "*.d.ts", "*.js"],
+  "files": ["lib/**/*.d.ts", "lib/**/*.js", "lib/**/*.js.map", "*.d.ts", "*.js", "config/*"],
   "scripts": {
     "start": "bun run src/main.ts",
     "build": "tsc",
