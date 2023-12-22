@@ -3,7 +3,15 @@
   "version": "0.1.11",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib/**/*.d.ts", "lib/**/*.js", "lib/**/*.js.map", "lib/**/*.json", "*.d.ts", "*.js", "*.json"],
+  "files": [
+    "lib/**/*.d.ts",
+    "lib/**/*.js",
+    "lib/**/*.js.map",
+    "lib/**/*.json",
+    "*.d.ts",
+    "*.js",
+    "*.json"
+  ],
   "scripts": {
     "build": "tsc",
     "generate-types": "typechain --target ethers-v5 --out-dir src/typechain 'src/abi/*.json'"
@@ -15,10 +23,6 @@
     "@injectivelabs/networks": "^1.14.4",
     "@injectivelabs/sdk-ts": "^1.14.4",
     "@injectivelabs/wallet-ts": "^1.14.4",
-    "@prisma/client": "^5.6.0",
-    "@typechain/ethers-v5": "^11.1.2",
-    "@typechain/ethers-v6": "^0.5.1",
-    "@types/js-yaml": "^4.0.9",
     "age-encryption": "^0.1.5",
     "async-mutex": "^0.4.0",
     "bs58": "^5.0.0",
@@ -26,9 +30,7 @@
     "ethers": "5.7.2",
     "grpc-web": "^1.5.0",
     "iost": "^0.1.22",
-    "js-yaml": "^4.1.0",
-    "ts-node": "^10.9.1",
-    "typechain": "^8.3.2"
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@types/node": "^20.10.4",
