@@ -1,5 +1,5 @@
 import { BigNumber, ethers } from "ethers";
-import { CHAINS_EVM } from "../config";
+import { CHAINS_EVM } from "../chains";
 import { Defferable, EvmConfig, Inscriber, Inscription, Provider, Signer, Tx } from "./inscriber";
 import { appendFileSync } from "fs";
 import assert from "assert";

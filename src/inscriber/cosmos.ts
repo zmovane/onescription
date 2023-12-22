@@ -1,5 +1,5 @@
 import { BigNumber, ethers } from "ethers";
-import { CHAINS_COSMOS } from "../config";
+import { CHAINS_COSMOS } from "../chains";
 import { CosmosConfig, Defferable, Inscriber, Inscription, Signer, Tx, TxRequest } from "./inscriber";
 import { appendFileSync } from "fs";
 import { Secp256k1HdWallet } from "@cosmjs/launchpad";
