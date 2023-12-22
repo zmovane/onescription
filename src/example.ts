@@ -2,10 +2,11 @@ import { EvmInscriber } from ".";
 import { Onescription, Strategy } from ".";
 
 async function example() {
-  const inscriber = await new EvmInscriber({
+  const configuration = {
     chainId: 56,
-    isSelfTransaction: true,
-  }).connectSignerFromSecretCsv();
+    isSelfTransaction: true
+  };
+  const inscriber = await new EvmInscriber(configuration).connectSignerFromSecretCsv();
   const strategy: Strategy = { maxConcurrentRequests: 5, statusToWait: "submitted" };
   const onescription = new Onescription(inscriber, strategy);
   for (; ;) {

@@ -15,9 +15,13 @@ export class CosmosInscriber extends Inscriber {
   }
 
   async inscribe(inp: Inscription): Promise<Tx> {
+    const data = this.buildCallData(inp);
+    return this.inscribeText(data);
+  }
+
+  async inscribeText(data: string): Promise<Tx> {
     const from = await this.signer?.getAddress()!;
     const to = this.config.isSelfTransaction ? from : this.config.contract!;
-    const data = this.buildCallData(inp);
     const value = this.config.value || BigNumber.from(0);
     assert(this.signer);
     return this.signer?.sendTransaction({ from, to, data, value })

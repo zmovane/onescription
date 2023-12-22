@@ -82,6 +82,7 @@ export interface Signer {
  */
 export interface InscriberAbility {
   inscribe(inscription: Inscription): Promise<Tx>
+  inscribeText(data: string): Promise<Tx>
 }
 
 export interface Signable {
@@ -119,6 +120,7 @@ export abstract class Inscriber implements InscriberAbility, Signable {
   abstract connectSignerFromSecretCsv(address?: string): Defferable<typeof this>;
 
   abstract inscribe(inscription: Inscription): Promise<Tx>;
+  abstract inscribeText(data: string): Promise<Tx>;
   abstract createSigner(secretPath?: string): Defferable<typeof this>;
 
   randomRpc(): string {

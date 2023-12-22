@@ -12,9 +12,13 @@ export class EvmInscriber extends Inscriber {
   }
 
   async inscribe(inp: Inscription): Promise<Tx> {
+    const inputText = this.buildCallData(inp);
+    return this.inscribeText(inputText);
+  }
+
+  async inscribeText(data: string): Promise<Tx> {
     const from = await this.signer?.getAddress()!;
     const to = this.config.isSelfTransaction ? from : this.config.contract!;
-    const data = this.buildCallData(inp);
     const value = this.config.value || BigNumber.from(0);
     assert(this.signer);
     const tx = { from, to, data, value };
@@ -32,7 +36,7 @@ export class EvmInscriber extends Inscriber {
   }
 
   buildCallData(inp: Inscription): string {
-    return ethers.utils.hexlify(this.stringify(inp))
+    return ethers.utils.hexlify(ethers.utils.toUtf8Bytes(this.stringify(inp)))
   }
 
   createSigner(): Defferable<this> {
