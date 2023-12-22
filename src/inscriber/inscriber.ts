@@ -133,7 +133,7 @@ export abstract class Inscriber implements InscriberAbility, Signable {
       throw Error(`${this.secretPath} not found`);
     }
     input = readFileSync(this.secretPath, 'utf-8');
-    const header = 'address,mnemonic\r\n';
+    const header = 'address,mnemonic\n';
     records = parse(header + input, {
       columns: true,
       skip_empty_lines: true,
