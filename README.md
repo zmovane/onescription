@@ -10,18 +10,18 @@ A multi-chain inscription tool that can be used as an inscription bot or integra
   - [x] inscription bot
   - [x] enable to integrate into web application
 
-- Supported chains:
+- Supported chains
 
   - [x] Evm-compatible chains
   - [x] Cosmos Hub
 
-- Strategy:
+- Strategy
 
   - [x] concurrent requests, based on [async-mutext](https://github.com/DirtyHairy/async-mutex) / semaphore.
   - [x] selectively executed according to customized logic, such as writing execution logic based on block height or unix timestamp. [INJS demo](#cosmos)
   - [ ] set the waiting status of each inscribing transaction.
 
-- Wallet:
+- Wallet
   - [x] connect an existing signer from private key / mnemonic / secret csv file.
   - [x] create a new wallet and export it to secret file (CSV format).
   - [ ] may be a better practice to encrypt the generated secret file using [age encryption](https://github.com/FiloSottile/typage).
