@@ -6,6 +6,10 @@ A multi-chain inscription tool that can be used as an inscription bot or integra
 
 ## Features
 
+- Utility
+  - [x] inscription bot
+  - [x] enable to integrate into web application
+
 - Supported chains:
 
   - [x] Evm-compatible chains
