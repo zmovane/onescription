@@ -11,8 +11,8 @@ export class InjectiveInscriber extends CosmosInscriber {
     super(config);
   }
 
-  async connectSignerFromSecretCsv(options?: { secretPath?: string; address?: string }): Promise<this> {
-    const mnemonic = this.connectMnemonicFromSecretCsv(options);
+  override async connectSignerFromSecretCsv(options?: { secretPath?: string; address?: string }): Promise<this> {
+    const mnemonic = this.readMnemonicFromSecretCsv(options);
     const signer = PrivateKey.fromMnemonic(mnemonic)
     const getAddress = async () => signer.toBech32();
     const sendTransaction =

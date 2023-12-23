@@ -3,8 +3,8 @@ import { CHAINS_COSMOS } from "../chains";
 import { CosmosConfig, Defferable, Inscriber, Inscription, Tx, TxRequest } from "./inscriber";
 import { appendFileSync } from "fs";
 import { Secp256k1HdWallet } from "@cosmjs/launchpad";
-import { assert } from "console";
 import { SigningStargateClient, StargateClient } from "@cosmjs/stargate";
+import assert from "assert";
 
 export class CosmosInscriber extends Inscriber {
   constructor(config: CosmosConfig) {
@@ -12,17 +12,20 @@ export class CosmosInscriber extends Inscriber {
     this.rpcs = CHAINS_COSMOS[config.prefix]?.rpcs ?? [];
   }
 
-  async inscribe(inp: Inscription): Promise<Tx> {
+  inscribe(inp: Inscription): Promise<Tx> {
     const data = this.buildCallData(inp);
     return this.inscribeText(data);
   }
 
   async inscribeText(data: string): Promise<Tx> {
-    const from = await this.signer?.getAddress()!;
-    const to = this.config.isSelfTransaction ? from : this.config.contract!;
-    const value = this.config.value || BigNumber.from(0);
     assert(this.signer);
-    return this.signer?.sendTransaction({ from, to, data, value })
+    return this.signer.getAddress()
+      .then((from) => {
+        const to = this.config.isSelfTransaction ? from : this.config.contract!;
+        const value = this.config.value || BigNumber.from(0);
+        return { from, to, data, value }
+      })
+      .then((txRequest) => this.signer?.sendTransaction(txRequest))
   }
 
   stringify(inp: Inscription): string {
@@ -60,7 +63,7 @@ export class CosmosInscriber extends Inscriber {
 
   // TODO: configurable gas 
   async connectSignerFromSecretCsv(options?: { secretPath?: string; address?: string }): Promise<this> {
-    const mnemonic = this.connectMnemonicFromSecretCsv(options);
+    const mnemonic = this.readMnemonicFromSecretCsv(options);
     return this.connectSignerFromMnemonic(mnemonic);
   }
   async connectSignerFromMnemonic(mnemonic: string): Promise<this> {

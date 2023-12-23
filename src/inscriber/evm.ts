@@ -52,7 +52,7 @@ export class EvmInscriber extends Inscriber {
   }
 
   connectSignerFromSecretCsv(options?: { secretPath?: string; address?: string }): Defferable<this> {
-    const mnemonic = this.connectMnemonicFromSecretCsv(options);
+    const mnemonic = this.readMnemonicFromSecretCsv(options);
     this.signer = ethers.Wallet.fromMnemonic(mnemonic);
     return this;
   }

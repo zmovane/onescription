@@ -105,7 +105,6 @@ export interface Signable {
    * if the address isn't set, the first address will be used as the signer.
    */
   connectSignerFromSecretCsv(options: { secretpath?: string; address?: string }): Defferable<Signable>;
-  connectMnemonicFromSecretCsv(options: { secretpath?: string; address?: string }): string;
 }
 
 export interface ChainInfoProvider {
@@ -142,7 +141,7 @@ export abstract class Inscriber implements InscriberAbility, Signable, ChainInfo
     return this;
   }
 
-  connectMnemonicFromSecretCsv(options?: { secretPath?: string; address?: string }): string {
+  protected readMnemonicFromSecretCsv(options?: { secretPath?: string; address?: string }): string {
     let input: string;
     let records: { address: string, mnemonic: string }[] = [];
     const secretPath = options?.secretPath ?? this.secretPath
