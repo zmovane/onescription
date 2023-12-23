@@ -55,8 +55,8 @@ export class CosmosInscriber extends Inscriber {
   }
 
   // TODO: configurable gas 
-  async connectSignerFromSecretCsv(address?: string): Promise<this> {
-    const mnemonic = this.connectMnemonicFromSecretCsv(address);
+  async connectSignerFromSecretCsv(options?: { secretPath?: string; address?: string }): Promise<this> {
+    const mnemonic = this.connectMnemonicFromSecretCsv(options);
     return this.connectSignerFromMnemonic(mnemonic);
   }
   async connectSignerFromMnemonic(mnemonic: string): Promise<this> {

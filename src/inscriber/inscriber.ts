@@ -16,6 +16,7 @@ export type Inscription = {
 }
 export type DeployInscription = Omit<Inscription, "amt">
 export type MintInscription = Omit<Inscription, "max" | "lim">;
+export type InscriptionText = `data:,${string}`
 
 /**
  * Inscribe Bot Configurations
@@ -101,8 +102,8 @@ export interface Signable {
    * @param address
    * if the address isn't set, the first address will be used as the signer.
    */
-  connectSignerFromSecretCsv(address?: string): Defferable<Signable>;
-  connectMnemonicFromSecretCsv(address?: string): string;
+  connectSignerFromSecretCsv(options: { secretpath?: string; address?: string }): Defferable<Signable>;
+  connectMnemonicFromSecretCsv(options: { secretpath?: string; address?: string }): string;
 }
 
 export abstract class Inscriber implements InscriberAbility, Signable {
@@ -117,7 +118,7 @@ export abstract class Inscriber implements InscriberAbility, Signable {
   }
   abstract connectSignerFromMnemonic(mnemonic: string): Defferable<typeof this>;
   abstract connectSignerFromPrivateKey(privateKey: string): Defferable<typeof this>
-  abstract connectSignerFromSecretCsv(address?: string): Defferable<typeof this>;
+  abstract connectSignerFromSecretCsv(options: { secretpath?: string; address?: string }): Defferable<typeof this>;
 
   abstract inscribe(inscription: Inscription): Promise<Tx>;
   abstract inscribeText(data: string): Promise<Tx>;
@@ -126,13 +127,14 @@ export abstract class Inscriber implements InscriberAbility, Signable {
   randomRpc(): string {
     return this.rpcs[randomInt(this.rpcs.length)];
   }
-  connectMnemonicFromSecretCsv(address?: string): string {
+  connectMnemonicFromSecretCsv(options?: { secretPath?: string; address?: string }): string {
     let input: string;
     let records: { address: string, mnemonic: string }[] = [];
-    if (!existsSync(this.secretPath)) {
-      throw Error(`${this.secretPath} not found`);
+    const secretPath = options?.secretPath ?? this.secretPath
+    if (!existsSync(secretPath)) {
+      throw Error(`${secretPath} not found`);
     }
-    input = readFileSync(this.secretPath, 'utf-8');
+    input = readFileSync(secretPath, 'utf-8');
     const header = 'address,mnemonic\n';
     records = parse(header + input, {
       columns: true,
@@ -142,8 +144,8 @@ export abstract class Inscriber implements InscriberAbility, Signable {
     if (records.length === 0)
       throw Error("Empty signers");
     let mnemonic: string | undefined;
-    if (address) {
-      const record = records.find((i) => i.address === address);
+    if (options?.address) {
+      const record = records.find((i) => i.address === options?.address);
       if (!record) throw Error("Signer not found");
       mnemonic = record.mnemonic.trim();
     } else {
