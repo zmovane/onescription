@@ -30,6 +30,7 @@ export type InscriptionText = `data:,${string}`
  * If not set, estimated gas will be used.
  */
 export type Config = {
+  os: "evm" | "cosmos";
   startBlock?: number;
   startTimestamp?: number;
   isSelfTransaction: boolean;

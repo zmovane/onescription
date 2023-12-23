@@ -51,6 +51,7 @@ export class InjectiveInscriber extends CosmosInscriber {
             gasPrice;
           gasLimit = this.config.gasLimit!.toString();
         } else {
+
           // simulate 
           const { signBytes, txRaw } = createTransaction(txArgs);
           const signature = await signer.sign(Buffer.from(signBytes));
