@@ -88,6 +88,7 @@ export interface InscriberAbility {
 }
 
 export interface Signable {
+  connectSigner(signer: Signer): Defferable<Signable>;
   connectSignerFromMnemonic(mnemonic: string): Defferable<Signable>;
   connectSignerFromPrivateKey(privateKey: string): Defferable<Signable>;
 
@@ -121,6 +122,7 @@ export abstract class Inscriber implements InscriberAbility, Signable, ChainInfo
     this.config = config;
     this.secretPath = config.secretPath || "./secret.csv";
   }
+
   abstract connectSignerFromMnemonic(mnemonic: string): Defferable<typeof this>;
   abstract connectSignerFromPrivateKey(privateKey: string): Defferable<typeof this>
   abstract connectSignerFromSecretCsv(options: { secretpath?: string; address?: string }): Defferable<typeof this>;
@@ -134,6 +136,12 @@ export abstract class Inscriber implements InscriberAbility, Signable, ChainInfo
   randomRpc(): string {
     return this.rpcs[randomInt(this.rpcs.length)];
   }
+
+  connectSigner(signer: Signer): Defferable<this> {
+    this.signer = signer;
+    return this;
+  }
+
   connectMnemonicFromSecretCsv(options?: { secretPath?: string; address?: string }): string {
     let input: string;
     let records: { address: string, mnemonic: string }[] = [];
