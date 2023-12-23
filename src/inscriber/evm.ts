@@ -5,7 +5,6 @@ import { appendFileSync } from "fs";
 import assert from "assert";
 
 export class EvmInscriber extends Inscriber {
-
   constructor(config: EvmConfig) {
     super(config);
     this.rpcs = CHAINS_EVM[`${config.chainId}`]?.rpcs ?? [];
@@ -25,6 +24,10 @@ export class EvmInscriber extends Inscriber {
     const gasPrice = this.config.gasPrice ?? (await this.randomProvider().getGasPrice());
     const gasLimit = this.config.gasLimit ?? await this.randomProvider().estimateGas(tx);
     return await this.signer.sendTransaction({ ...tx, gasPrice, gasLimit });
+  }
+
+  getBlockHeight(): Promise<number> {
+    return this.randomProvider().getBlockNumber()
   }
 
   randomProvider(): Provider {

@@ -107,7 +107,11 @@ export interface Signable {
   connectMnemonicFromSecretCsv(options: { secretpath?: string; address?: string }): string;
 }
 
-export abstract class Inscriber implements InscriberAbility, Signable {
+export interface ChainInfoProvider {
+  getBlockHeight(): Promise<number>
+}
+
+export abstract class Inscriber implements InscriberAbility, Signable, ChainInfoProvider {
   csvDelimiter = ',';
   rpcs: string[] = [];
   protected signer?: Signer;
@@ -124,6 +128,8 @@ export abstract class Inscriber implements InscriberAbility, Signable {
   abstract inscribe(inscription: Inscription): Promise<Tx>;
   abstract inscribeText(data: string): Promise<Tx>;
   abstract createSigner(secretPath?: string): Defferable<typeof this>;
+
+  abstract getBlockHeight(): Promise<number>;
 
   randomRpc(): string {
     return this.rpcs[randomInt(this.rpcs.length)];

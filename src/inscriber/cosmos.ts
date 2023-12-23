@@ -4,10 +4,9 @@ import { CosmosConfig, Defferable, Inscriber, Inscription, Tx, TxRequest } from 
 import { appendFileSync } from "fs";
 import { Secp256k1HdWallet } from "@cosmjs/launchpad";
 import { assert } from "console";
-import { SigningStargateClient } from "@cosmjs/stargate";
+import { SigningStargateClient, StargateClient } from "@cosmjs/stargate";
 
 export class CosmosInscriber extends Inscriber {
-
   constructor(config: CosmosConfig) {
     super(config);
     this.rpcs = CHAINS_COSMOS[config.prefix]?.rpcs ?? [];
@@ -52,6 +51,11 @@ export class CosmosInscriber extends Inscriber {
     }
     // TODO
     throw Error("Unknown prefix");
+  }
+
+  async getBlockHeight(): Promise<number> {
+    const client = await StargateClient.connect(this.randomRpc());
+    return client.getHeight()
   }
 
   // TODO: configurable gas 
