@@ -28,44 +28,44 @@ export class Onescription {
   constructor(inscriber: Inscriber, strategy: Strategy) {
     this.inscriber = inscriber
     this.strategy = strategy;
-    this.semaphore = new Semaphore(
-      strategy.maxConcurrentRequests ?? DEFAULT_STRATEGY.maxConcurrentRequests!);
+    const concurrentRequests = Math.max(1, strategy.maxConcurrentRequests ?? DEFAULT_STRATEGY.maxConcurrentRequests!);
+    this.semaphore = new Semaphore(concurrentRequests + 1);
   }
-  async inscribe(inp: Inscription | InscriptionText): Promise<any> {
+
+  async inscribe(inp: Inscription | InscriptionText): Promise<unknown> {
     this.semaphore.acquire();
-    const predicated = await this.predicated();
-    if (!predicated) {
-      console.warn("The conditions for execution are not satisfied")
-      const mills = this.strategy.delayIfUnsatisfied ?? DEFAULT_STRATEGY.delayIfUnsatisfied!;
-      return delay(mills)
-        .finally(() => {
-          this.semaphore.release();
-        });
-    }
-    return await this.semaphore.runExclusive(() => {
-      match(inp)
-        .returnType<Promise<Tx>>()
-        .with(
-          { op: "mint" }, { op: 'deploy' }, { op: "transfer" },
-          () => this.inscriber.inscribe(inp as Inscription)
-        )
-        .when(
-          () => inp.toString().startsWith("data:,"),
-          () => this.inscriber.inscribeText(inp as InscriptionText)
-        )
-        .run()
-        .then((_) => console.log)
-        .catch(async (e) => {
-          if (this.strategy.delayIfFailed) {
-            await delay(this.strategy.delayIfFailed)
+    return await this.semaphore.runExclusive(async () => {
+      this.predicated()
+        .then(async (predicated) => {
+          if (!predicated) {
+            console.warn("The conditions for execution are not satisfied")
+            const mills = this.strategy.delayIfUnsatisfied ?? DEFAULT_STRATEGY.delayIfUnsatisfied!;
+            return delay(mills)
           }
-          return Promise.reject(e);
+          return match(inp)
+            .returnType<Promise<Tx>>()
+            .when(
+              () => inp.toString().startsWith("data:,"),
+              () => this.inscriber.inscribeText(inp as InscriptionText)
+            )
+            .with(
+              { "op": "mint" }, { "op": "deploy" }, { "op": "transfer" },
+              () => this.inscriber.inscribe(inp as Inscription)
+            )
+            .run();
         })
-        .finally(() => {
-          this.semaphore.release();
-        });
+        .then(console.log)
+        .catch((e) => {
+          console.error(e)
+          if (this.strategy.delayIfFailed) {
+            return delay(this.strategy.delayIfFailed);
+          }
+          return Promise.resolve("Error caught");
+        })
+        .finally(() => this.semaphore.release());
     });
   }
+
   predicated(): Promise<boolean> {
     return this.strategy?.predicate ?
       this.strategy.predicate!(this.inscriber) :
