@@ -29,6 +29,9 @@
   "overrides": {
     "axios": "^1.6.2"
   },
+  "resolutions": {
+    "axios": "^1.6.2"
+  },
   "devDependencies": {
     "@types/node": "^20.10.4",
     "typescript": "^5.3.2"
