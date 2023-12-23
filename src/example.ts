@@ -10,7 +10,7 @@ async function example() {
   const inscriber = Inscriber.from(configuration)
   inscriber.connectSignerFromSecretCsv();
   const strategy: Strategy = {
-    maxConcurrentRequests: 2,
+    maxConcurrentRequests: 1,
     statusToWait: "submitted",
     // The $INJS introduction is available in this link
     // https://docs.injs.ink/mint-injs

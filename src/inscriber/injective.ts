@@ -6,6 +6,8 @@ import { StdFee } from "@cosmjs/amino";
 import { BigNumberInWei } from "@injectivelabs/utils";
 
 export class InjectiveInscriber extends CosmosInscriber {
+  GAS_ADJUSTMENT = 1.1;
+  MINIMUM_AMOUNT = new BigNumberInWei('1');
   MINIMUM_GAS_PRICE = new BigNumberInWei('500000000');
   constructor(config: CosmosConfig) {
     super(config);
@@ -18,8 +20,9 @@ export class InjectiveInscriber extends CosmosInscriber {
     const sendTransaction =
       async ({ from: sender, to: recipient, value, data: memo }: TxRequest) => {
         const network = getNetworkInfo(Network.Mainnet);
+        const minAmount = this.MINIMUM_AMOUNT.gt(new BigNumberInWei(value.toString())) ? this.MINIMUM_AMOUNT.toFixed() : value.toString();
         const amount = {
-          amount: value.toString(),
+          amount: minAmount,
           denom: "inj",
         };
         const publicKey = signer.toPublicKey().toBase64();
@@ -38,18 +41,18 @@ export class InjectiveInscriber extends CosmosInscriber {
           pubKey: publicKey,
           sequence: accountDetails.sequence,
           accountNumber: accountDetails.accountNumber,
-          chainId: network.chainId,
+          chainId: network.chainId
         }
 
         const gasOverrided = this.config.gasLimit;
         let gasLimit: string;
-        let gasPrice: string;
+        let gasAmount: string;
         let fee: StdFee
         if (gasOverrided) {
-          gasPrice = this.config.gasPrice?.toString() ?? this.MINIMUM_GAS_PRICE.toFixed();
-          gasPrice = this.MINIMUM_GAS_PRICE.gt(new BigNumberInWei(gasPrice)) ? this.MINIMUM_GAS_PRICE.toFixed() :
-            gasPrice;
+          let gasPrice = this.config.gasPrice?.toString() ?? this.MINIMUM_GAS_PRICE.toFixed();
+          gasPrice = this.MINIMUM_GAS_PRICE.gt(new BigNumberInWei(gasPrice)) ? this.MINIMUM_GAS_PRICE.toFixed() : gasPrice;
           gasLimit = this.config.gasLimit!.toString();
+          gasAmount = new BigNumberInWei(gasLimit).multipliedBy(new BigNumberInWei(gasPrice)).toFixed()
         } else {
 
           // simulate 
@@ -58,13 +61,13 @@ export class InjectiveInscriber extends CosmosInscriber {
           txRaw.signatures = [signature];
           const txService = new TxGrpcClient(network.grpc);
           const { gasInfo } = await txService.simulate(txRaw)
-          gasPrice = this.MINIMUM_GAS_PRICE.toFixed();
-          gasLimit = gasInfo.gasWanted!.toString();
+          gasAmount = this.MINIMUM_GAS_PRICE.multipliedBy(gasInfo.gasUsed).toFixed(0);
+          gasLimit = new BigNumberInWei(gasInfo.gasUsed).multipliedBy(this.GAS_ADJUSTMENT).toFixed(0);
         }
         fee = {
           amount: [
             {
-              amount: gasPrice,
+              amount: gasAmount,
               denom: "inj",
             },
           ],
