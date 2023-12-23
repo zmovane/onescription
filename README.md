@@ -7,6 +7,8 @@ A multi-chain inscription tool that can be used as an inscription bot or integra
 - [Features](#features)
 - [Installation](#installation)
 - [Examples](#examples)
+  - [use as an inscription bot](#to-use-as-an-inscription-bot)
+  - [use in web application](#to-use-in-web-application)
 
 ## Features
 
