@@ -4,6 +4,10 @@
 
 A multi-chain inscription tool that can be used as an inscription bot or integrated into web applications, it provides concurrent strategies, secure wallet generation methods, etc.
 
+- [Features](#features)
+- [Installation](#installation)
+- [Examples](#examples)
+
 ## Features
 
 - Utility
@@ -28,6 +32,7 @@ A multi-chain inscription tool that can be used as an inscription bot or integra
   - [ ] may be a better practice to encrypt the generated secret file using [age encryption](https://github.com/FiloSottile/typage).
 
 ## Installation
+
 ```
 yarn add onescription@latest
 ```
