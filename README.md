@@ -4,6 +4,24 @@
 
 A multi-chain inscription tool that can be used as an inscription bot or integrated into web applications, it provides concurrent strategies, secure wallet generation methods, etc.
 
+## Features
+
+Supported chains:
+
+  - [x] Evm-compatible chains
+  - [x] Cosmos Hub
+
+Strategy:
+
+  - [x] concurrent requests, based on [async-mutext](https://github.com/DirtyHairy/async-mutex) / semaphore.
+  - [x] selectively executed according to customized logic, such as writing execution logic based on block height or unix timestamp. [INJS demo](#cosmos)
+  - [ ] set the waiting status of each inscribing transaction.
+
+Wallet:
+  - [x] connect an existing signer from private key / mnemonic / secret csv file.
+  - [x] create a new wallet and export it to CSV.
+  - [ ] 
+
 ## Examples
 
 ### To use as an inscription bot
