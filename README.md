@@ -2,7 +2,11 @@
 
 <a href="https://npm.im/onescription"><img src="https://badgen.net/npm/v/onescription"></a> <a href="https://npm.im/onescription"><img src="https://badgen.net/npm/dm/onescription"></a>
 
-### Examples
+A multi-chain inscription tool that can be used as an inscription bot or integrated into web applications, it provides concurrent strategies, secure wallet generation methods, etc.
+
+## Examples
+
+### Use as an inscription bot
 
 #### **Evm:**
 
