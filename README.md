@@ -1,8 +1,11 @@
 # All-in-One inscription tool
 
+<a href="https://npm.im/onescription"><img src="https://badgen.net/npm/v/onescription"></a> <a href="https://npm.im/onescription"><img src="https://badgen.net/npm/dm/onescription"></a>
+
 ### Examples
 
-**Evm**
+**Evm:**
+BNB chain
 
 ```typescript
 const configuration: EvmConfig = {
@@ -24,7 +27,8 @@ for (;;) {
 }
 ```
 
-**Cosmos**
+**Cosmos:**
+Injective
 
 ```typescript
 const configuration: CosmosConfig = {
