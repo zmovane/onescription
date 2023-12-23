@@ -27,6 +27,11 @@ A multi-chain inscription tool that can be used as an inscription bot or integra
   - [x] create a new wallet and export it to secret file (CSV format).
   - [ ] may be a better practice to encrypt the generated secret file using [age encryption](https://github.com/FiloSottile/typage).
 
+## Installation
+```
+yarn add onescription@latest
+```
+
 ## Examples
 
 ### To use as an inscription bot
