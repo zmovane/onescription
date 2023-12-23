@@ -23,11 +23,15 @@ A multi-chain inscription tool that can be used as an inscription bot or integra
   - [x] Evm-compatible chains
   - [x] Cosmos Hub
 
-- Strategy
+- Highly customizable
+  - [x] configurable gas options, with automatic estimation as the default.
+  - [x] selectively executed according to customized logic, such as writing execution logic based on block height or unix timestamp. [INJS demo](#cosmos)
+  - [ ] configurable transaction type, including contract call or token transfer.
+
+- Concurrent requests
 
   - [x] concurrent requests, based on [async-mutext](https://github.com/DirtyHairy/async-mutex) / semaphore.
-  - [x] selectively executed according to customized logic, such as writing execution logic based on block height or unix timestamp. [INJS demo](#cosmos)
-  - [ ] wait for each transaction until the user-defined status is reached.
+  - [ ] wait for each request until the user-defined status is reached.
 
 - Wallet
   - [x] connect an existing signer from private key / mnemonic / secret csv file.
