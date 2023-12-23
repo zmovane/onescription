@@ -1,6 +1,7 @@
-import { Inscriber, Inscription } from "./inscriber";
+import { Inscriber, Inscription, InscriptionText, Tx } from "./inscriber";
 import { Semaphore } from 'async-mutex';
 import { delay } from "./utils";
+import { match } from 'ts-pattern';
 
 export type Strategy = {
   maxConcurrentRequests?: number;
@@ -29,14 +30,23 @@ export class Onescription {
     this.semaphore = new Semaphore(
       strategy.maxConcurrentRequests ?? DEFAULT_STRATEGY.maxConcurrentRequests!);
   }
-  async inscribe(inp: Inscription): Promise<any> {
+  async inscribe(inp: Inscription | InscriptionText): Promise<any> {
     if (!this.predicated()) {
       return await delay(this.strategy.delayIfUnsatisfied ?? DEFAULT_STRATEGY.delayIfUnsatisfied!);
     }
     this.semaphore.acquire();
     return await this.semaphore.runExclusive(() => {
-      this.inscriber
-        .inscribe(inp)
+      match(inp)
+        .returnType<Promise<Tx>>()
+        .with(
+          { op: "mint" }, { op: 'deploy' }, { op: "transfer" },
+          () => this.inscriber.inscribe(inp as Inscription)
+        )
+        .when(
+          () => inp.toString().startsWith("data:,"),
+          () => this.inscriber.inscribeText(inp as InscriptionText)
+        )
+        .run()
         .then((_) => console.log)
         .catch(async (e) => {
           if (this.strategy.delayIfFailed) {
