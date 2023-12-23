@@ -72,7 +72,7 @@ export class InjectiveInscriber extends CosmosInscriber {
         };
 
         // broadcast
-        const { signBytes, txRaw } = createTransaction(txArgs);
+        const { signBytes, txRaw } = createTransaction({ ...txArgs, fee });
         const signature = await signer.sign(Buffer.from(signBytes));
         txRaw.signatures = [signature];
         const txService = new TxGrpcClient(network.grpc);
