@@ -4,7 +4,8 @@
 
 ### Examples
 
-**Evm:**
+#### **Evm:**
+
 BNB chain
 
 ```typescript
@@ -14,6 +15,9 @@ const configuration: EvmConfig = {
   isSelfTransaction: true,
 };
 const inscriber = Inscriber.from(configuration);
+// or
+//inscriber.connectSignerFromPrivateKey("YOUR PRIVATE");
+inscriber.connectSignerFromMnemonic("YOUR MNEMONIC");
 const strategy: Strategy = {
   maxConcurrentRequests: 5,
   statusToWait: "requested",
@@ -27,7 +31,8 @@ for (;;) {
 }
 ```
 
-**Cosmos:**
+#### **Cosmos:**
+
 Injective
 
 ```typescript
@@ -37,6 +42,7 @@ const configuration: CosmosConfig = {
   isSelfTransaction: true,
 };
 const inscriber = Inscriber.from(configuration);
+inscriber.connectSignerFromMnemonic("YOUR MNEMONIC");
 const strategy: Strategy = {
   maxConcurrentRequests: 1,
   statusToWait: "submitted",
