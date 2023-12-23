@@ -1,6 +1,7 @@
 # All-in-One inscription tool
 
-<a href="https://npm.im/onescription"><img src="https://badgen.net/npm/v/onescription"></a> <a href="https://npm.im/onescription"><img src="https://badgen.net/npm/dm/onescription"></a>
+![https://npm.im/onescription](https://badgen.net/npm/v/onescription)
+![https://www.npmjs.com/package/onescription](https://badgen.net/npm/dm/onescription)
 
 A multi-chain inscription tool that can be used as an inscription bot or integrated into web applications, it provides concurrent strategies, secure wallet generation methods, etc.
 
