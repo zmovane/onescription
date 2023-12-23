@@ -20,5 +20,11 @@
       "https://cosmoshub.validator.network:443",
       "https://rpc.cosmos.network:26657"
     ]
+  },
+  "inj": {
+    "name": "InjectiveMainnet",
+    "rpcs": [
+      "https://sentry.tm.injective.network:443"
+    ]
   }
 }
