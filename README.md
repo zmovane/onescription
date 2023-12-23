@@ -19,8 +19,8 @@ Strategy:
 
 Wallet:
   - [x] connect an existing signer from private key / mnemonic / secret csv file.
-  - [x] create a new wallet and export it to CSV.
-  - [ ] 
+  - [x] create a new wallet and export it to secret file (CSV format).
+  - [ ] may be a better practice to encrypt the generated secret file using [age encryption](https://github.com/FiloSottile/typage).
 
 ## Examples
 
