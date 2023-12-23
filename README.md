@@ -6,7 +6,7 @@ A multi-chain inscription tool that can be used as an inscription bot or integra
 
 ## Examples
 
-### Use as an inscription bot
+### To use as an inscription bot
 
 #### **Evm:**
 
@@ -76,4 +76,19 @@ const inscription = { p: "injrc-20", op: "mint", tick: "INJS", amt: "1000" };
 for (;;) {
   await onescription.inscribe(inscription);
 }
+```
+
+### To use in web application
+
+```typescript
+const configuration: EvmConfig = {
+  os: "evm",
+  chainId: 56,
+  isSelfTransaction: true,
+};
+const inscriber = Inscriber.from(configuration);
+const signer = new ethers.providers.Web3Provider(window.ethereum).getSigner();
+inscriber.connectSigner(signer);
+const inp: Inscription = { p: "bsc-20", op: "mint", tick: "bnbs", amt: "1000" };
+await inscriber.inscribe(inp);
 ```
