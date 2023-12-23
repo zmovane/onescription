@@ -1,6 +1,6 @@
 {
   "name": "onescription",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
