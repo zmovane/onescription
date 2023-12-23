@@ -7,6 +7,7 @@ A multi-chain inscription tool that can be used as an inscription bot or integra
 ## Features
 
 - Utility
+
   - [x] inscription bot
   - [x] can be integrated into web applications
 
@@ -70,11 +71,11 @@ const configuration: CosmosConfig = {
 const inscriber = Inscriber.from(configuration);
 inscriber.connectSignerFromMnemonic("YOUR MNEMONIC");
 const strategy: Strategy = {
-  maxConcurrentRequests: 1,
+  maxConcurrentRequests: 2,
   statusToWait: "submitted",
+  // The $INJS introduction is available in this link
+  // https://docs.injs.ink/mint-injs
   predicate: async (provider: ChainInfoProvider) => {
-    // The $INJS introduction is available in this link
-    // https://docs.injs.ink/mint-injs
     const blockHeight = await provider.getBlockHeight();
     console.log("current block height:", blockHeight);
     const rounds = [
@@ -87,10 +88,10 @@ const strategy: Strategy = {
       [55310800, 55312300],
       [55354000, 55355500],
     ];
-    const valid =
+    return (
       undefined !==
-      rounds.find(([start, end]) => start <= blockHeight && blockHeight <= end);
-    return valid;
+      rounds.find(([start, end]) => start <= blockHeight && blockHeight <= end)
+    );
   },
 };
 const onescription = new Onescription(inscriber, strategy);
