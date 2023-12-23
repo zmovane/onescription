@@ -3,7 +3,7 @@
 ![https://npm.im/onescription](https://badgen.net/npm/v/onescription)
 ![https://www.npmjs.com/package/onescription](https://badgen.net/npm/dm/onescription)
 
-A multi-chain inscription tool that can be used as an inscription bot or integrated into web applications, it provides concurrent strategies, secure wallet generation methods, etc.
+A multi-chain inscription tool that can function as a standalone inscription bot or seamlessly integrate into web applications. The tool also boasts concurrent request handling, secure wallet generation, and a range of other valuable features.
 
 - [Features](#features)
 - [Installation](#installation)
@@ -16,7 +16,7 @@ A multi-chain inscription tool that can be used as an inscription bot or integra
 - Utility
 
   - [x] inscription bot
-  - [x] can be integrated into web applications
+  - [x] can be integrated into web application
 
 - Supported chains
 
@@ -30,7 +30,7 @@ A multi-chain inscription tool that can be used as an inscription bot or integra
 
 - Concurrent requests
 
-  - [x] concurrent requests, based on [async-mutext](https://github.com/DirtyHairy/async-mutex) / semaphore.
+  - [x] correct way to handle concurrent requests on nodejs, based on [async-mutext](https://github.com/DirtyHairy/async-mutex) / semaphore.
   - [ ] wait for each request until the user-defined status is reached.
 
 - Wallet
