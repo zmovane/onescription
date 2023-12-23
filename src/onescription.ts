@@ -7,7 +7,7 @@ import { ChainInfoProvider, Inscriber } from "./inscriber/inscriber";
 export type Strategy = {
   maxConcurrentRequests?: number;
   statusToWait?: "requested" | "submitted" | "confirmed";
-  predicate: (provider: ChainInfoProvider) => Promise<boolean>
+  predicate?: (provider: ChainInfoProvider) => Promise<boolean>
   delayIfFailed?: number;
   delayIfUnsatisfied?: number;
 };
@@ -69,6 +69,6 @@ export class Onescription {
   predicated(): Promise<boolean> {
     return this.strategy?.predicate ?
       this.strategy.predicate!(this.inscriber) :
-      DEFAULT_STRATEGY.predicate(this.inscriber)
+      DEFAULT_STRATEGY.predicate!(this.inscriber)
   }
 }
