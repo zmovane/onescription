@@ -6,10 +6,17 @@
 A multi-chain inscription tool that can function as a standalone inscription bot or seamlessly integrate into web applications. The tool also boasts concurrent request handling, secure wallet generation, and a range of other valuable features.
 
 - [Features](#features)
-- [Installation](#installation)
+- [Packages](#packages)
 - [Examples](#examples)
   - [use as an inscription bot](#to-use-as-an-inscription-bot)
   - [use in web application](#to-use-in-web-application)
+
+## Packages
+
+| Package                                                                                | Version                                              | Installation                         |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------ |
+| [@scription/evm](https://github.com/Amovane/onescription/tree/main/packages/evm)       | ![](https://img.shields.io/npm/v/@scriptione/evm)    | `yarn add @scriptione/evm@latest`    |
+| [@scription/cosmos](https://github.com/Amovane/onescription/tree/main/packages/cosmos) | ![](https://img.shields.io/npm/v/@scriptione/cosmos) | `yarn add @scriptione/cosmos@latest` |
 
 ## Features
 
@@ -24,6 +31,7 @@ A multi-chain inscription tool that can function as a standalone inscription bot
   - [x] Cosmos Hub
 
 - Highly customizable
+
   - [x] configurable gas options, with automatic estimation as the default.
   - [x] selectively executed according to customized logic, such as writing execution logic based on block height or unix timestamp. [INJS demo](#cosmos)
   - [ ] configurable transaction type, including contract call or token transfer.
@@ -38,13 +46,6 @@ A multi-chain inscription tool that can function as a standalone inscription bot
   - [x] create a new wallet and export it to secret file (CSV format).
   - [ ] may be a better practice to encrypt the generated secret file using [age encryption](https://github.com/FiloSottile/typage).
 
-## Packages
-
-| Package                 | Version                                            | Installation
-| ----------------------- | -------------------------------------------------- | -------------------------
-| [@scription/evm]()      |![](https://img.shields.io/npm/v/@scriptione/evm)   | `yarn add @scriptione/evm@latest`
-| [@scription/cosmos]()   |![](https://img.shields.io/npm/v/@scriptione/cosmos)| `yarn add @scriptione/cosmos@latest`
-
 ## Examples
 
 ### To use as an inscription bot
@@ -54,6 +55,7 @@ A multi-chain inscription tool that can function as a standalone inscription bot
 BNB chain
 
 ```typescript
+import { ChainInfoProvider, EvmConfig, Inscriber, Onescription, Strategy } from "@scriptione/evm";
 const configuration: EvmConfig = {
   os: "evm",
   chainId: 56,
@@ -81,6 +83,8 @@ for (;;) {
 Injective
 
 ```typescript
+import { ChainInfoProvider, CosmosConfig, Inscriber, Onescription, Strategy } from "@scriptione/cosmos";
+
 const configuration: CosmosConfig = {
   os: "cosmos",
   prefix: "inj",
@@ -122,6 +126,7 @@ for (;;) {
 ### To use in web application
 
 ```typescript
+import { ChainInfoProvider, EvmConfig, Inscriber, Onescription, Strategy } from "@scriptione/evm";
 const configuration: EvmConfig = {
   os: "evm",
   chainId: 56,
