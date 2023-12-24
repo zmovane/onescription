@@ -1,7 +1,8 @@
 # All-in-One inscription tool
 
-![https://npm.im/onescription](https://badgen.net/npm/v/onescription)
-![https://www.npmjs.com/package/onescription](https://badgen.net/npm/dm/onescription)
+![https://npm.im/onescription](https://img.shields.io/npm/v/onescription)
+![](https://img.shields.io/npm/dm/onescription)
+![](https://snyk.io/test/github/amovane/onescription/badge.svg)
 
 A multi-chain inscription tool that can function as a standalone inscription bot or seamlessly integrate into web applications. The tool also boasts concurrent request handling, secure wallet generation, and a range of other valuable features.
 
