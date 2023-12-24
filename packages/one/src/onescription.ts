@@ -1,8 +1,7 @@
-import { Inscription, InscriptionText, Tx } from "./inscriber";
+import { Inscription, InscriptionText, Tx, ChainInfoProvider, Inscriber } from "./inscriber";
 import { Semaphore } from 'async-mutex';
 import { delay } from "./utils";
 import { match } from 'ts-pattern';
-import { ChainInfoProvider, Inscriber } from "./inscriber/inscriber";
 
 export type Strategy = {
   maxConcurrentRequests?: number;

@@ -4,4 +4,3 @@ secret.*
 */**/*.js.map
 */**/*.d.ts
 */**/*.d.ts.map
-*/**/*.json

@@ -43,8 +43,6 @@ export type Config = {
 }
 
 // Currently support evm & cosmos
-export type EvmConfig = Config & { chainId: ChainId };
-export type CosmosConfig = Config & { prefix: string };
 
 /**
  * on-chain Transaction
