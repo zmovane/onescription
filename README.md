@@ -25,7 +25,7 @@ A multi-chain inscription tool that can function as a standalone inscription bot
   - [x] inscription bot
   - [x] can be integrated into web application
 
-- Supported chains
+- Multi-chain support
 
   - [x] Evm-compatible chains
   - [x] Cosmos Hub
