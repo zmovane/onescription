@@ -41,17 +41,7 @@ export class Onescription {
             const mills = this.strategy.delayIfUnsatisfied ?? DEFAULT_STRATEGY.delayIfUnsatisfied!;
             return delay(mills)
           }
-          return match(inp)
-            .returnType<Promise<Tx>>()
-            .when(
-              () => inp.toString().startsWith("data:,"),
-              () => this.inscriber.inscribeText(inp as InscriptionText)
-            )
-            .with(
-              { "op": "mint" }, { "op": "deploy" }, { "op": "transfer" },
-              () => this.inscriber.inscribe(inp as Inscription)
-            )
-            .run();
+          return this.buildInscribeTx(inp)
         })
         .then(console.log)
         .catch((e) => {
@@ -63,6 +53,20 @@ export class Onescription {
         })
         .finally(() => this.semaphore.release());
     });
+  }
+
+  buildInscribeTx(inp: Inscription | InscriptionText): Promise<Tx> {
+    return match(inp)
+      .returnType<Promise<Tx>>()
+      .when(
+        () => inp.toString().startsWith("data:,"),
+        () => this.inscriber.inscribeText(inp as InscriptionText)
+      )
+      .with(
+        { "op": "mint" }, { "op": "deploy" }, { "op": "transfer" },
+        () => this.inscriber.inscribe(inp as Inscription)
+      )
+      .run();
   }
 
   predicated(): Promise<boolean> {
