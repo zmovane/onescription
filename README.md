@@ -15,8 +15,8 @@ A multi-chain inscription tool that can function as a standalone inscription bot
 
 | Package                                                                                | Version                                              | Security                                                        | Installation                         |
 | -------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------ |
-| [@scription/evm](https://github.com/Amovane/onescription/tree/main/packages/evm)       | ![](https://img.shields.io/npm/v/@scriptione/evm)    | ![](https://snyk.io/test/github/amovane/onescription/badge.svg) | `yarn add @scriptione/evm@latest`    |
-| [@scription/cosmos](https://github.com/Amovane/onescription/tree/main/packages/cosmos) | ![](https://img.shields.io/npm/v/@scriptione/cosmos) | ![](https://snyk.io/test/github/amovane/onescription/badge.svg) | `yarn add @scriptione/cosmos@latest` |
+| [@scriptione/evm](https://github.com/Amovane/onescription/tree/main/packages/evm)       | ![](https://img.shields.io/npm/v/@scriptione/evm)    | ![](https://snyk.io/test/github/amovane/onescription/badge.svg) | `yarn add @scriptione/evm@latest`    |
+| [@scriptione/cosmos](https://github.com/Amovane/onescription/tree/main/packages/cosmos) | ![](https://img.shields.io/npm/v/@scriptione/cosmos) | ![](https://snyk.io/test/github/amovane/onescription/badge.svg) | `yarn add @scriptione/cosmos@latest` |
 
 ## Features
 
