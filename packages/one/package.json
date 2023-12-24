@@ -1,0 +1,29 @@
+{
+  "name": "@scriptione/one",
+  "version": "0.0.3",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/*"
+  ],
+  "author": {
+    "name": "amovane"
+  },
+  "repository": {
+    "url": "https://github.com/amovane/onescription"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "csv": "^6.3.6",
+    "ethers": "5.7.2",
+    "age-encryption": "^0.1.5",
+    "async-mutex": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "typescript": "^5.3.2"
+  }
+}

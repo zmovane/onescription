@@ -1,9 +1,10 @@
-import { CosmosConfig, TxRequest } from "./inscriber";
+import { TxRequest } from "@scriptione/one";
 import { BaseAccount, ChainRestAuthApi, MsgSend, PrivateKey, TxGrpcClient, createTransaction } from "@injectivelabs/sdk-ts";
 import { Network, getNetworkInfo } from "@injectivelabs/networks";
 import { CosmosInscriber } from "./cosmos";
 import { StdFee } from "@cosmjs/amino";
 import { BigNumberInWei } from "@injectivelabs/utils";
+import { CosmosConfig } from ".";
 
 export class InjectiveInscriber extends CosmosInscriber {
   GAS_ADJUSTMENT = 1.1;

@@ -1,0 +1,27 @@
+{
+  "name": "@scriptione/evm",
+  "version": "0.0.3",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/*"
+  ],
+  "author": {
+    "name": "amovane"
+  },
+  "repository": {
+    "url": "https://github.com/amovane/onescription"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@scriptione/one": "0.0.2",
+    "ethers": "5.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "typescript": "^5.3.2"
+  }
+}

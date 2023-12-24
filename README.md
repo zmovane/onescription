@@ -1,7 +1,6 @@
 # All-in-One inscription tool
 
-![https://npm.im/onescription](https://img.shields.io/npm/v/onescription)
-![](https://img.shields.io/npm/dm/onescription)
+![https://npm.im/@scriptione/one](https://img.shields.io/npm/v/@scriptione/one)
 ![](https://snyk.io/test/github/amovane/onescription/badge.svg)
 
 A multi-chain inscription tool that can function as a standalone inscription bot or seamlessly integrate into web applications. The tool also boasts concurrent request handling, secure wallet generation, and a range of other valuable features.
@@ -39,11 +38,12 @@ A multi-chain inscription tool that can function as a standalone inscription bot
   - [x] create a new wallet and export it to secret file (CSV format).
   - [ ] may be a better practice to encrypt the generated secret file using [age encryption](https://github.com/FiloSottile/typage).
 
-## Installation
+## Packages
 
-```
-yarn add onescription@latest
-```
+| Package                 | Version                                            | Installation
+| ----------------------- | -------------------------------------------------- | -------------------------
+| [@scription/evm]()      |![](https://img.shields.io/npm/v/@scriptione/evm)   | `yarn add @scriptione/evm@latest`
+| [@scription/cosmos]()   |![](https://img.shields.io/npm/v/@scriptione/cosmos)| `yarn add @scriptione/cosmos@latest`
 
 ## Examples
 

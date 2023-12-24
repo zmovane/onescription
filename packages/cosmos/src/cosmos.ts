@@ -1,15 +1,14 @@
-import { BigNumber, ethers } from "ethers";
-import { CHAINS_COSMOS } from "../chains";
-import { CosmosConfig, Defferable, Inscriber, Inscription, Tx, TxRequest } from "./inscriber";
+import { Defferable, Inscriber, Inscription, Tx, TxRequest } from "@scriptione/one";
 import { appendFileSync } from "fs";
 import { Secp256k1HdWallet } from "@cosmjs/launchpad";
 import { SigningStargateClient, StargateClient } from "@cosmjs/stargate";
 import assert from "assert";
+import { CHAINS, CosmosConfig } from ".";
 
 export class CosmosInscriber extends Inscriber {
   constructor(config: CosmosConfig) {
     super(config);
-    this.rpcs = CHAINS_COSMOS[config.prefix]?.rpcs ?? [];
+    this.rpcs = CHAINS[config.prefix]?.rpcs ?? [];
   }
 
   inscribe(inp: Inscription): Promise<Tx> {
@@ -22,7 +21,7 @@ export class CosmosInscriber extends Inscriber {
     return this.signer.getAddress()
       .then((from) => {
         const to = this.config.isSelfTransaction ? from : this.config.contract!;
-        const value = this.config.value || BigNumber.from(0);
+        const value = this.config.value || 0;
         return { from, to, data, value }
       })
       .then((txRequest) => this.signer?.sendTransaction(txRequest))
@@ -36,12 +35,12 @@ export class CosmosInscriber extends Inscriber {
     return Buffer.from(this.stringify(inp)).toString('base64');
   }
 
-  createSigner(): Defferable<this> {
-    const signer = ethers.Wallet.createRandom();
-    const { address, privateKey } = signer;
-    const record = `${address}${this.csvDelimiter}${privateKey}\r\n`;
+  async createSigner(): Promise<this> {
+    const wallet = await Secp256k1HdWallet.generate(undefined, { prefix: (this.config as CosmosConfig).prefix });
+    const [{ address }] = await wallet.getAccounts();
+    const record = `${address}${this.csvDelimiter}${wallet.mnemonic}\n`;
     appendFileSync(this.secretPath, record);
-    this.signer = signer;
+    this.connectSignerFromMnemonic(wallet.mnemonic);
     return this;
   }
 
