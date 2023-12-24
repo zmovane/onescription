@@ -5,18 +5,18 @@
 
 A multi-chain inscription tool that can function as a standalone inscription bot or seamlessly integrate into web applications. The tool also boasts concurrent request handling, secure wallet generation, and a range of other valuable features.
 
-- [Features](#features)
 - [Packages](#packages)
+- [Features](#features)
 - [Examples](#examples)
   - [use as an inscription bot](#to-use-as-an-inscription-bot)
   - [use in web application](#to-use-in-web-application)
 
 ## Packages
 
-| Package                                                                                | Version                                              | Installation                         |
-| -------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------ |
-| [@scription/evm](https://github.com/Amovane/onescription/tree/main/packages/evm)       | ![](https://img.shields.io/npm/v/@scriptione/evm)    | `yarn add @scriptione/evm@latest`    |
-| [@scription/cosmos](https://github.com/Amovane/onescription/tree/main/packages/cosmos) | ![](https://img.shields.io/npm/v/@scriptione/cosmos) | `yarn add @scriptione/cosmos@latest` |
+| Package                                                                                | Version                                              | Security                                                        | Installation                         |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------ |
+| [@scription/evm](https://github.com/Amovane/onescription/tree/main/packages/evm)       | ![](https://img.shields.io/npm/v/@scriptione/evm)    | ![](https://snyk.io/test/github/amovane/onescription/badge.svg) | `yarn add @scriptione/evm@latest`    |
+| [@scription/cosmos](https://github.com/Amovane/onescription/tree/main/packages/cosmos) | ![](https://img.shields.io/npm/v/@scriptione/cosmos) | ![](https://snyk.io/test/github/amovane/onescription/badge.svg) | `yarn add @scriptione/cosmos@latest` |
 
 ## Features
 
@@ -55,7 +55,7 @@ A multi-chain inscription tool that can function as a standalone inscription bot
 BNB chain
 
 ```typescript
-import { ChainInfoProvider, EvmConfig, Inscriber, Onescription, Strategy } from "@scriptione/evm";
+import { EvmConfig, Inscriber, Onescription, Strategy } from "@scriptione/evm";
 const configuration: EvmConfig = {
   os: "evm",
   chainId: 56,
@@ -83,7 +83,13 @@ for (;;) {
 Injective
 
 ```typescript
-import { ChainInfoProvider, CosmosConfig, Inscriber, Onescription, Strategy } from "@scriptione/cosmos";
+import {
+  ChainInfoProvider,
+  CosmosConfig,
+  Inscriber,
+  Onescription,
+  Strategy,
+} from "@scriptione/cosmos";
 
 const configuration: CosmosConfig = {
   os: "cosmos",
@@ -126,7 +132,7 @@ for (;;) {
 ### To use in web application
 
 ```typescript
-import { ChainInfoProvider, EvmConfig, Inscriber, Onescription, Strategy } from "@scriptione/evm";
+import { EvmConfig, Inscriber } from "@scriptione/evm";
 const configuration: EvmConfig = {
   os: "evm",
   chainId: 56,
