@@ -1,7 +1,7 @@
-import { randomInt } from "crypto";
 import { ethers } from "ethers";
 import { readFileSync, existsSync } from "fs";
 import { parse } from 'csv-parse/sync';
+import { randomInt } from "./utils";
 
 /**
  * Inscription: mint & deploy
@@ -130,7 +130,7 @@ export abstract class Inscriber implements InscriberAbility, Signable, ChainInfo
   abstract getBlockHeight(): Promise<number>;
 
   randomRpc(): string {
-    return this.rpcs[randomInt(this.rpcs.length)];
+    return this.rpcs[randomInt(0, this.rpcs.length - 1)];
   }
 
   connectSigner(signer: Signer): Defferable<this> {
