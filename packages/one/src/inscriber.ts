@@ -20,6 +20,7 @@ export type InscriptionText = `data:,${string}`
 
 /**
  * Inscribe Bot Configurations, currently support evm & cosmos
+ * 
  * @startBlock @startTimestamp
  * inscribe will start at specific block or timestamp
  *  
@@ -41,8 +42,6 @@ export type Config = {
   gasPrice?: BigNumberish;
   gasLimit?: BigNumberish;
 }
-
-
 
 /**
  * on-chain Transaction
