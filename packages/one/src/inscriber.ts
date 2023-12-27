@@ -73,8 +73,9 @@ export interface TxRequest {
 }
 
 export interface Signer {
-  getAddress(): Promise<string>
-  sendTransaction(txRequest: TxRequest): Promise<Tx>
+  getAddress(): Promise<string>;
+  connect(provider: Provider): Signer;
+  sendTransaction(txRequest: TxRequest): Promise<Tx>;
 }
 
 /**

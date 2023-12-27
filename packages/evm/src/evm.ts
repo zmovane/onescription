@@ -24,7 +24,7 @@ export class EvmInscriber extends Inscriber {
     const tx = { from, to, data, value };
     const gasPrice = this.config.gasPrice ?? (await this.randomProvider().getGasPrice());
     const gasLimit = this.config.gasLimit ?? await this.randomProvider().estimateGas(tx);
-    return await this.signer.sendTransaction({ ...tx, gasPrice, gasLimit });
+    return await this.signer.connect(this.randomProvider()).sendTransaction({ ...tx, gasPrice, gasLimit });
   }
 
   getBlockHeight(): Promise<number> {
