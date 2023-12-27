@@ -31,27 +31,30 @@ export class Onescription {
     this.semaphore = new Semaphore(concurrentRequests + 1);
   }
 
-  async inscribe(inp: Inscription | InscriptionText): Promise<unknown> {
+  async inscribe(inp: Inscription | InscriptionText): Promise<Tx | void> {
     this.semaphore.acquire();
     return await this.semaphore.runExclusive(async () => {
       this.predicated()
         .then(async (predicated) => {
           if (!predicated) {
-            console.warn("The conditions for execution are not satisfied")
-            const mills = this.strategy.delayIfUnsatisfied ?? DEFAULT_STRATEGY.delayIfUnsatisfied!;
-            return delay(mills)
+            throw new Error("E1001: The conditions for execution are not satisfied")
           }
           return this.buildInscribeTx(inp)
         })
-        .then(console.log)
+        .then((tx) => tx)
         .catch((e) => {
           console.error(e)
+          const errMsg = e.toString();
+          if (errMsg.startsWith("E1001")) {
+            const mills = this.strategy.delayIfUnsatisfied ?? DEFAULT_STRATEGY.delayIfUnsatisfied!;
+            return delay(mills)
+          }
           if (this.strategy.delayIfFailed) {
             return delay(this.strategy.delayIfFailed);
           }
           return Promise.resolve("Error caught");
         })
-        .finally(() => this.semaphore.release());
+        .finally(() => { this.semaphore.release() });
     });
   }
 
