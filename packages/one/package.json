@@ -1,6 +1,6 @@
 {
   "name": "@scriptione/one",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -17,10 +17,11 @@
     "build": "tsc"
   },
   "dependencies": {
+    "age-encryption": "^0.1.5",
+    "async-mutex": "^0.4.0",
     "csv": "^6.3.6",
     "ethers": "5.7.2",
-    "age-encryption": "^0.1.5",
-    "async-mutex": "^0.4.0"
+    "ts-pattern": "^5.0.6"
   },
   "devDependencies": {
     "@types/node": "^20.10.4",
