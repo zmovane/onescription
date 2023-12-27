@@ -59,7 +59,7 @@ export class Onescription {
     return match(inp)
       .returnType<Promise<Tx>>()
       .when(
-        () => inp.toString().startsWith("data:,"),
+        () => inp.toString().startsWith("data:"),
         () => this.inscriber.inscribeText(inp as InscriptionText)
       )
       .with(
