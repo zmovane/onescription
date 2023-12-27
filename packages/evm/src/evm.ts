@@ -17,7 +17,7 @@ export class EvmInscriber extends Inscriber {
 
   async inscribeText(data: string): Promise<Tx> {
     const from = await this.signer?.getAddress()!;
-    const to = this.config.isSelfTransaction ? from : this.config.contract!;
+    const to = this.config.isSelfTransaction ? from : (this.config.recipient ? this.config.recipient : this.config.contract!);
     const value = this.config.value || BigNumber.from(0);
     assert(this.signer);
     const tx = { from, to, data, value };

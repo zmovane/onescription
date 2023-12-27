@@ -35,6 +35,7 @@ export type Config = {
   startBlock?: number;
   startTimestamp?: number;
   isSelfTransaction: boolean;
+  recipient?: string;
   contract?: string;
   functionAbi?: string;
   secretPath?: string;

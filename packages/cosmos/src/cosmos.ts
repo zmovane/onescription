@@ -20,7 +20,7 @@ export class CosmosInscriber extends Inscriber {
     assert(this.signer);
     return this.signer.getAddress()
       .then((from) => {
-        const to = this.config.isSelfTransaction ? from : this.config.contract!;
+        const to = this.config.isSelfTransaction ? from : (this.config.recipient ? this.config.recipient : this.config.contract!);
         const value = this.config.value || 0;
         return { from, to, data, value }
       })
