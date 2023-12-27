@@ -52,7 +52,7 @@ A multi-chain inscription tool that can function as a standalone inscription bot
 
 #### **Evm:**
 
-opbrc20
+opbrc
 
 ```typescript
 import { EvmConfig, Inscriber, Onescription, Strategy } from "@scriptione/evm";
