@@ -16,7 +16,7 @@ export type Inscription = {
 }
 export type DeployInscription = Omit<Inscription, "amt">
 export type MintInscription = Omit<Inscription, "max" | "lim">;
-export type InscriptionText = `data:,${string}`
+export type InscriptionText = `data:${string}`
 
 /**
  * Inscribe Bot Configurations, currently support evm & cosmos
