@@ -31,20 +31,20 @@ export class Onescription {
     this.semaphore = new Semaphore(concurrentRequests + 1);
   }
 
-  async inscribe(inp: Inscription | InscriptionText): Promise<Tx> {
+  async inscribe(inp: Inscription | InscriptionText, cb?: (tx: Tx) => void): Promise<void> {
     this.semaphore.acquire();
-    return await this.semaphore.runExclusive<Tx>(async () => {
-      return this.predicated()
+    return await this.semaphore.runExclusive(async () => {
+      this.predicated()
         .then(async (predicated) => {
           if (!predicated) {
             throw new Error("E1001: The conditions for execution are not satisfied")
           }
           return await this.buildInscribeTx(inp)
         })
-        .then((tx) => tx)
+        .then((tx) => { cb?.(tx) })
         .catch((err) => {
           const errMsg = err.toString();
-          const errResolved = Promise.resolve({ err });
+          const errTx = { err };
           let mills = 0;
           if (errMsg.startsWith("E1001")) {
             mills = this.strategy.delayIfUnsatisfied ?? DEFAULT_STRATEGY.delayIfUnsatisfied!;
@@ -52,7 +52,7 @@ export class Onescription {
           if (this.strategy.delayIfFailed) {
             mills = this.strategy.delayIfFailed;
           }
-          return mills === 0 ? errResolved : delay(mills).then(() => errResolved);
+          return mills === 0 ? cb?.(errTx) : delay(mills).then(() => cb?.(errTx));
         })
         .finally(() => { this.semaphore.release() });
     });
