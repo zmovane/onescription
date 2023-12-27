@@ -74,9 +74,9 @@ const strategy: Strategy = {
 const onescription = new Onescription(inscriber, strategy);
 // const obrcInsc: InscriptionText = data:application/json,{"p":"opbrc","op":"mint","tick":"obrc"}
 const opbnInsc: InscriptionText = `data:application/json,{"p":"opbrc","op":"mint","tick":"opbn"}`;
-for (;;) {
-  const tx = await onescription.inscribe(opbnInsc);
-  console.log(tx);
+const concurrCb = ({ hash, err }: Tx) => console.log(hash || err);
+for (; ;) {
+  await onescription.inscribe(inscription, concurrCb);
 }
 ```
 
