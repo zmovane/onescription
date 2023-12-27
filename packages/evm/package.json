@@ -1,6 +1,6 @@
 {
   "name": "@scriptione/evm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -17,7 +17,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@scriptione/one": "0.1.0",
+    "@scriptione/one": "0.1.1",
     "ethers": "5.7.2"
   },
   "devDependencies": {
