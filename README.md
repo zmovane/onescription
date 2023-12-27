@@ -13,8 +13,8 @@ A multi-chain inscription tool that can function as a standalone inscription bot
 
 ## Packages
 
-| Package                                                                                | Version                                              | Security                                                        | Installation                         |
-| -------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------ |
+| Package                                                                                 | Version                                              | Security                                                        | Installation                         |
+| --------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------ |
 | [@scriptione/evm](https://github.com/Amovane/onescription/tree/main/packages/evm)       | ![](https://img.shields.io/npm/v/@scriptione/evm)    | ![](https://snyk.io/test/github/amovane/onescription/badge.svg) | `yarn add @scriptione/evm@latest`    |
 | [@scriptione/cosmos](https://github.com/Amovane/onescription/tree/main/packages/cosmos) | ![](https://img.shields.io/npm/v/@scriptione/cosmos) | ![](https://snyk.io/test/github/amovane/onescription/badge.svg) | `yarn add @scriptione/cosmos@latest` |
 
@@ -52,29 +52,31 @@ A multi-chain inscription tool that can function as a standalone inscription bot
 
 #### **Evm:**
 
-BNB chain
+opbrc20
 
 ```typescript
 import { EvmConfig, Inscriber, Onescription, Strategy } from "@scriptione/evm";
 const configuration: EvmConfig = {
   os: "evm",
-  chainId: 56,
-  isSelfTransaction: true,
+  chainId: 204,
+  isSelfTransaction: false,
+  value: 0,
+  recipient: "0x83b978Cf73ee1D571b1a2550c5570861285AF337",
 };
 const inscriber = Inscriber.from(configuration);
+inscriber.connectSignerFromPrivateKey("YOUR PRIVATE");
 // or
-//inscriber.connectSignerFromPrivateKey("YOUR PRIVATE");
-inscriber.connectSignerFromMnemonic("YOUR MNEMONIC");
+// inscriber.connectSignerFromMnemonic("YOUR MNEMONIC");
 const strategy: Strategy = {
-  maxConcurrentRequests: 5,
-  statusToWait: "requested",
+  maxConcurrentRequests: 3,
+  statusToWait: "submitted",
 };
 const onescription = new Onescription(inscriber, strategy);
-const inscription = `data:,{"p":"bsc-20","op":"mint","tick":"bnbs","amt":"1000"}`;
-// or
-// const inscription: Inscription = { p: "bsc-20", op: "mint", tick: "bnbs", amt: "1000" };
+// const obrcInsc: InscriptionText = data:application/json,{"p":"opbrc","op":"mint","tick":"obrc"}
+const opbnInsc: InscriptionText = `data:application/json,{"p":"opbrc","op":"mint","tick":"opbn"}`;
 for (;;) {
-  await onescription.inscribe(inscription);
+  const { hash } = await onescription.inscribe(opbnInsc);
+  console.log(hash);
 }
 ```
 
