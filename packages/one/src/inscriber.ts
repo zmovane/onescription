@@ -47,7 +47,7 @@ export type Config = {
 /**
  * on-chain Transaction
  */
-export type Tx = { hash?: string };
+export type Tx = { hash?: string, err?: any };
 export type BigNumberish = ethers.BigNumberish;
 export type BytesLike = ethers.BytesLike;
 export type ChainId = number;
