@@ -75,8 +75,8 @@ const onescription = new Onescription(inscriber, strategy);
 // const obrcInsc: InscriptionText = data:application/json,{"p":"opbrc","op":"mint","tick":"obrc"}
 const opbnInsc: InscriptionText = `data:application/json,{"p":"opbrc","op":"mint","tick":"opbn"}`;
 for (;;) {
-  const { hash } = await onescription.inscribe(opbnInsc);
-  console.log(hash);
+  const tx = await onescription.inscribe(opbnInsc);
+  console.log(tx);
 }
 ```
 
