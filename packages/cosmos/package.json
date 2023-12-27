@@ -1,6 +1,6 @@
 {
   "name": "@scriptione/cosmos",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -23,7 +23,7 @@
     "@injectivelabs/networks": "^1.14.4",
     "@injectivelabs/sdk-ts": "^1.14.4",
     "@injectivelabs/utils": "^1.14.4",
-    "@scriptione/one": "0.1.6",
+    "@scriptione/one": "0.1.7",
     "ts-pattern": "^5.0.6"
   },
   "devDependencies": {
