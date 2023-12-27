@@ -47,7 +47,7 @@ export type Config = {
 /**
  * on-chain Transaction
  */
-export type Tx = { hash: string } | undefined;
+export type Tx = { hash?: string };
 export type BigNumberish = ethers.BigNumberish;
 export type BytesLike = ethers.BytesLike;
 export type ChainId = number;
@@ -74,7 +74,7 @@ export interface TxRequest {
 
 export interface Signer {
   getAddress(): Promise<string>;
-  connect(provider: Provider): Signer;
+  connect(provider: Provider): Signer | undefined;
   sendTransaction(txRequest: TxRequest): Promise<Tx>;
 }
 

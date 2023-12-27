@@ -83,7 +83,7 @@ export class InjectiveInscriber extends CosmosInscriber {
         const txResponse = await txService.broadcast(txRaw);
         return { hash: txResponse.txHash }
       };
-    this.signer = { sendTransaction, getAddress };
+    this.signer = { sendTransaction, getAddress, connect: (_) => this.signer };
     return this;
   }
 }

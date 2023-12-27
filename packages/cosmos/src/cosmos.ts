@@ -1,4 +1,4 @@
-import { Defferable, Inscriber, Inscription, Tx, TxRequest } from "@scriptione/one";
+import { Defferable, Inscriber, Inscription, Provider, Tx, TxRequest } from "@scriptione/one";
 import { appendFileSync } from "fs";
 import { Secp256k1HdWallet } from "@cosmjs/launchpad";
 import { SigningStargateClient, StargateClient } from "@cosmjs/stargate";
@@ -24,7 +24,7 @@ export class CosmosInscriber extends Inscriber {
         const value = this.config.value || 0;
         return { from, to, data, value }
       })
-      .then((txRequest) => this.signer?.sendTransaction(txRequest))
+      .then((txRequest) => this.signer!.sendTransaction(txRequest))
   }
 
   stringify(inp: Inscription): string {
@@ -71,6 +71,7 @@ export class CosmosInscriber extends Inscriber {
     const client = await SigningStargateClient.connectWithSigner(this.randomRpc(), wallet);
     const account = (await wallet.getAccounts())[0].address;
     const getAddress = async () => account;
+    const connect = (_: Provider) => this.signer;
     const sendTransaction =
       async ({ from: sender, to: recipient, value: amount, data: memo }: TxRequest) => {
         const { transactionHash } = await client.sendTokens(
@@ -82,7 +83,7 @@ export class CosmosInscriber extends Inscriber {
         );
         return { hash: transactionHash }
       };
-    this.signer = { sendTransaction, getAddress };
+    this.signer = { sendTransaction, getAddress, connect };
     return this;
   }
   connectSignerFromPrivateKey(privateKey: string): Defferable<this> {
