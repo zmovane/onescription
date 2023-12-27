@@ -11,15 +11,16 @@ export class EvmInscriber extends Inscriber {
   }
 
   async inscribe(inp: Inscription): Promise<Tx> {
-    const inputText = this.buildCallData(inp);
+    const inputText = this.stringify(inp);
     return this.inscribeText(inputText);
   }
 
-  async inscribeText(data: string): Promise<Tx> {
+  async inscribeText(text: string): Promise<Tx> {
+    assert(this.signer);
     const from = await this.signer?.getAddress()!;
     const to = this.config.isSelfTransaction ? from : (this.config.recipient ? this.config.recipient : this.config.contract!);
     const value = this.config.value || BigNumber.from(0);
-    assert(this.signer);
+    const data = this.buildCallData(text);
     const tx = { from, to, data, value };
     const gasPrice = this.config.gasPrice ?? (await this.randomProvider().getGasPrice());
     const gasLimit = this.config.gasLimit ?? await this.randomProvider().estimateGas(tx);
@@ -38,8 +39,8 @@ export class EvmInscriber extends Inscriber {
     return `data:,${JSON.stringify(inp)}`
   }
 
-  buildCallData(inp: Inscription): string {
-    return ethers.utils.hexlify(ethers.utils.toUtf8Bytes(this.stringify(inp)))
+  buildCallData(input: string): string {
+    return ethers.utils.hexlify(ethers.utils.toUtf8Bytes(input))
   }
 
   createSigner(): Defferable<this> {
