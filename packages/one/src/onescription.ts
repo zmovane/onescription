@@ -35,19 +35,19 @@ export class Onescription {
     this.semaphore.acquire();
     return await this.semaphore.runExclusive(async () => {
       this.predicated()
-        .then(async (predicated) => {
+        .then((predicated) => {
           if (!predicated) {
             throw new Error("E1001: The conditions for execution are not satisfied")
           }
           return this.buildInscribeTx(inp)
         })
-        .then((tx) => tx)
+        .then((tx) => Promise.resolve(tx))
         .catch((e) => {
-          console.error(e)
           const errMsg = e.toString();
+          console.error("Error caught:", errMsg);
           if (errMsg.startsWith("E1001")) {
             const mills = this.strategy.delayIfUnsatisfied ?? DEFAULT_STRATEGY.delayIfUnsatisfied!;
-            return delay(mills)
+            return delay(mills);
           }
           if (this.strategy.delayIfFailed) {
             return delay(this.strategy.delayIfFailed);
