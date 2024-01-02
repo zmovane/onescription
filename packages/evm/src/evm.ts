@@ -24,7 +24,12 @@ export class EvmInscriber extends Inscriber {
     const tx = { from, to, data, value };
     const gasPrice = this.config.gasPrice ?? (await this.randomProvider().getGasPrice());
     const gasLimit = this.config.gasLimit ?? await this.randomProvider().estimateGas(tx);
-    return await this.signer.connect(this.randomProvider())!.sendTransaction({ ...tx, gasPrice, gasLimit });
+    let signer = this.signer as ethers.Signer;
+    if (!signer.provider) {
+      const provider = this.randomProvider() as ethers.providers.JsonRpcProvider
+      signer = signer.connect(provider)
+    }
+    return await signer!.sendTransaction({ ...tx, gasPrice, gasLimit });
   }
 
   getBlockHeight(): Promise<number> {
